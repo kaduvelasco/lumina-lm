@@ -80,3 +80,18 @@ set_sysctl_value() {
     printf '%s=%s\n' "${key}" "${value}" >> "${temp_file}"
     sudo install -m 644 "${temp_file}" "${config_file}"
 }
+
+configure_swappiness() {
+    info "Configurando swappiness..."
+    set_sysctl_value "/etc/sysctl.d/99-lumina-swappiness.conf" "vm.swappiness" "10"
+}
+
+configure_inotify() {
+    info "Configurando inotify..."
+    set_sysctl_value "/etc/sysctl.d/99-lumina-inotify.conf" "fs.inotify.max_user_watches" "524288"
+}
+
+apply_sysctl() {
+    info "Aplicando parâmetros do kernel..."
+    sudo sysctl --system >/dev/null
+}

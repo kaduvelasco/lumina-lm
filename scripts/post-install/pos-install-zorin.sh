@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Script Name     : pos-install-popos.sh
-# Description     : Post-install routine for Pop!_OS 24.04 LTS COSMIC
+# Script Name     : pos-install-zorin.sh
+# Description     : Post-install routine for ZorinOS 18.1
 # Version         : 1.0.0
 # =============================================================================
 
@@ -25,37 +25,38 @@ show_header() {
     show_lumina_header
 }
 
-# --- funções auxiliares ---
-setup_fastfetch_repository() {
-    info "Configurando repositório do Fastfetch..."
-    sudo apt-get install -y -- software-properties-common
-    sudo add-apt-repository -y ppa:zhangsongcui3371/fastfetch
-}
-
 # --- funções de negócio ---
 run_post_install() {
     local log_file
     local -a apt_packages=(
-        ubuntu-restricted-extras
+        # codecs and media support
         libavcodec-extra
         ffmpeg
+        gstreamer1.0-plugins-bad
+        gstreamer1.0-plugins-ugly
+        gstreamer1.0-libav
+        # gnome tools
+        gnome-tweaks
+        gnome-shell-extension-manager
+        # essential tools
         build-essential
-        gparted
-        gdebi
-        unrar
-        unzip
-        p7zip-full
+        git
         curl
         wget
-        git
         htop
-        make
+        fastfetch
+        # utilities
+        gparted
+        gdebi
+        libfuse2t64
+        unrar
+        unzip
+        ntfs-3g
+        p7zip-full
         tree
         jq
         plocate
         net-tools
-        python3-pip
-        fastfetch
     )
     local -a flatpak_packages=(
         org.videolan.VLC
@@ -64,14 +65,12 @@ run_post_install() {
     require_not_root
     require_sudo
     require_internet
-    assert_distro "pop"
+    assert_distro "zorin"
 
-    log_file="$(start_log "pos-install-popos")"
+    log_file="$(start_log "pos-install-zorin")"
 
     show_header
     info "Log salvo em: ${log_file}"
-
-    setup_fastfetch_repository
 
     info "Atualizando sistema base..."
     sudo apt-get update -y
@@ -80,26 +79,26 @@ run_post_install() {
     info "Instalando pacotes APT..."
     sudo apt-get install -y -- "${apt_packages[@]}"
 
-    info "Configurando fontes Microsoft..."
+    info "Configurando fontes Microsoft e mídias restritas..."
     printf '%s\n' \
         "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" \
         | sudo debconf-set-selections
-    sudo apt-get install -y -- ttf-mscorefonts-installer
-
-    ensure_flatpak_ready
-    info "Instalando Flatpaks essenciais..."
-    flatpak install -y flathub "${flatpak_packages[@]}"
+    sudo apt-get install -y -- zorin-os-restricted-extras
 
     configure_swappiness
     configure_inotify
     apply_sysctl
 
+    ensure_flatpak_ready
+    info "Instalando Flatpaks essenciais..."
+    flatpak install -y flathub "${flatpak_packages[@]}"
+
     if is_installed_cmd updatedb; then
         sudo updatedb
     fi
 
-    success "Pós-instalação do Pop!_OS concluída."
-    warn "Verifique atualizações do COSMIC regularmente."
+    success "Pós-instalação do ZorinOS concluída."
+    warn "Reinicie o sistema para aplicar todas as mudanças."
     pause_screen
 }
 

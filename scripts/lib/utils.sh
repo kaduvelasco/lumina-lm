@@ -27,7 +27,6 @@ readonly SIM_INFO='ℹ️'
 readonly SIM_FAIL='❌'
 
 export C1 C2 C3 C4 C5 C6 H1 H2 TS RESET
-readonly C1 C2 C3 C4 C5 C6 H1 H2 TS RESET
 
 die() {
     local message="$1"

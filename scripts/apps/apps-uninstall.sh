@@ -17,6 +17,11 @@ fi
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/../lib/utils.sh"
 
+# --- globals compartilhados entre funções ---
+declare -a INSTALLED_APP_NAMES=()
+declare -a INSTALLED_APP_IDS=()
+declare -a APPS_TO_UNINSTALL=()
+
 # --- funções auxiliares ---
 load_installed_flatpaks() {
     local entry

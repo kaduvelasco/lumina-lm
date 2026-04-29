@@ -34,7 +34,6 @@ install_command() {
     require_not_root
     require_sudo
 
-
     if [[ ! -f "${source_script}" ]]; then
         die "update-system.sh não encontrado em: ${source_script}"
     fi

@@ -23,15 +23,14 @@ Lumina LM é um toolkit de terminal para tarefas recorrentes de configuração e
 ```text
 .
 ├── lumina-lm.sh
-├── scripts/
-│   ├── apps/
-│   ├── installers/
-│   ├── lib/
-│   ├── menus/
-│   ├── post-install/
-│   ├── system/
-│   └── templates/
-└── exemplos/
+└── scripts/
+    ├── apps/
+    ├── installers/
+    ├── lib/
+    ├── menus/
+    ├── post-install/
+    ├── system/
+    └── templates/
 ```
 
 ## Instalação
@@ -83,7 +82,7 @@ Veja [CONTRIBUINDO.md](CONTRIBUINDO.md).
 
 ## Licença
 
-Nenhum arquivo de licença está incluído atualmente neste repositório.
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
 
 ---
 

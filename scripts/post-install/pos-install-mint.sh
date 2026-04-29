@@ -26,18 +26,6 @@ show_header() {
 }
 
 # --- funções auxiliares ---
-configure_swappiness() {
-    info "Configurando swappiness..."
-    set_sysctl_value "/etc/sysctl.d/99-lumina-swappiness.conf" "vm.swappiness" "10"
-    sudo sysctl --system >/dev/null
-}
-
-configure_inotify() {
-    info "Configurando inotify..."
-    set_sysctl_value "/etc/sysctl.d/99-lumina-inotify.conf" "fs.inotify.max_user_watches" "524288"
-    sudo sysctl --system >/dev/null
-}
-
 enable_base_repositories() {
     local repo
 
@@ -45,7 +33,7 @@ enable_base_repositories() {
     sudo apt-get install -y -- software-properties-common
 
     for repo in universe multiverse; do
-        sudo add-apt-repository -y "${repo}"
+        sudo add-apt-repository -y --no-update "${repo}"
     done
 }
 
@@ -112,6 +100,7 @@ run_post_install() {
 
     configure_swappiness
     configure_inotify
+    apply_sysctl
 
     if is_installed_cmd ubuntu-drivers; then
         sudo ubuntu-drivers autoinstall || warn "Nenhum driver adicional foi necessário."

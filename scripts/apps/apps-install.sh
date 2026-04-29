@@ -17,6 +17,12 @@ fi
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/../lib/utils.sh"
 
+# --- globals compartilhados entre funções ---
+declare -a MENU_NAMES=()
+declare -a MENU_IDS=()
+declare -i MENU_INDEX=1
+declare -a APPS_TO_INSTALL=()
+
 # --- funções auxiliares ---
 is_flatpak_installed() {
     local app_id="$1"

@@ -30,6 +30,7 @@ show_post_install_menu() {
         printf '%b\n' "  ${C2}1.${RESET} Linux Mint 22.3"
         printf '%b\n' "  ${C2}2.${RESET} Pop!_OS 24.04 LTS (COSMIC)"
         printf '%b\n' "  ${C2}3.${RESET} CachyOS"
+        printf '%b\n' "  ${C2}4.${RESET} ZorinOS 18.1"
         printf '%b\n' "  ${C1}0.${RESET} Voltar"
         printf '%b\n' ""
         printf '%s' "Selecione uma opção: "
@@ -41,6 +42,7 @@ show_post_install_menu() {
             1) bash "$SCRIPT_DIR/../post-install/pos-install-mint.sh" ;;
             2) bash "$SCRIPT_DIR/../post-install/pos-install-popos.sh" ;;
             3) bash "$SCRIPT_DIR/../post-install/pos-install-cachyos.sh" ;;
+            4) bash "$SCRIPT_DIR/../post-install/pos-install-zorin.sh" ;;
             0) return 10 ;;
             *) warn "Opção inválida." ; pause_screen ;;
         esac

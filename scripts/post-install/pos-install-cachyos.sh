@@ -26,18 +26,6 @@ show_header() {
 }
 
 # --- funções auxiliares ---
-configure_swappiness() {
-    info "Configurando swappiness..."
-    set_sysctl_value "/etc/sysctl.d/99-lumina-swappiness.conf" "vm.swappiness" "10"
-    sudo sysctl --system >/dev/null
-}
-
-configure_inotify() {
-    info "Configurando inotify..."
-    set_sysctl_value "/etc/sysctl.d/99-lumina-inotify.conf" "fs.inotify.max_user_watches" "524288"
-    sudo sysctl --system >/dev/null
-}
-
 detect_desktop() {
     local desktop_session="${XDG_CURRENT_DESKTOP:-Unknown}"
     info "Ambiente detectado: ${desktop_session}"
@@ -104,6 +92,7 @@ run_post_install() {
     validate_desktop_support
     configure_swappiness
     configure_inotify
+    apply_sysctl
 
     if is_installed_cmd updatedb; then
         sudo updatedb
